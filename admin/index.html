@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin - Fundação Escola Solidária</title>
+    <meta name="robots" content="noindex, nofollow" />
+    
+    <!-- TailwindCSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    
+    <!-- Custom Styles -->
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+      
+      * {
+        font-family: 'Inter', sans-serif;
+      }
+      
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+      
+      ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+      }
+      
+      ::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 4px;
+      }
+      
+      ::-webkit-scrollbar-thumb:hover {
+        background: #555;
+      }
+      
+      /* Loading Animation */
+      .loading-spinner {
+        border: 3px solid #f3f3f3;
+        border-top: 3px solid #3b82f6;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+      }
+      
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+      
+      /* Toast Notification */
+      .toast {
+        animation: slideIn 0.3s ease-out;
+      }
+      
+      @keyframes slideIn {
+        from {
+          transform: translateX(100%);
+          opacity: 0;
+        }
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+      
+      /* Sidebar Active Link */
+      .sidebar-link.active {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+      }
+      
+      /* Rich Text Editor */
+      .editor-toolbar {
+        border-bottom: 1px solid #e5e7eb;
+        padding: 0.5rem;
+        background: #f9fafb;
+      }
+      
+      .editor-content {
+        min-height: 200px;
+        padding: 1rem;
+        border: 1px solid #e5e7eb;
+        border-radius: 0.5rem;
+      }
+      
+      .editor-content:focus {
+        outline: none;
+        border-color: #3b82f6;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-50">
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="fixed inset-0 bg-black bg-opacity-50 z-50 items-center justify-center hidden">
+      <div class="bg-white rounded-lg p-8 flex flex-col items-center">
+        <div class="loading-spinner"></div>
+        <p class="mt-4 text-gray-700 font-medium">Carregando...</p>
+      </div>
+    </div>
+
+    <!-- Login Page -->
+    <div id="loginPage" class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-500 to-purple-600 p-4">
+      <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-8">
+        <div class="text-center mb-8">
+          <div class="inline-block p-4 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full mb-4">
+            <i class="fas fa-lock text-white text-3xl"></i>
+          </div>
+          <h1 class="text-3xl font-bold text-gray-800 mb-2">Painel Admin</h1>
+          <p class="text-gray-600">Fundação Escola Solidária</p>
+        </div>
+
+        <form id="loginForm" class="space-y-6">
+          <div>
+            <label for="loginEmail" class="block text-sm font-medium text-gray-700 mb-2">
+              <i class="fas fa-envelope mr-2"></i>Email
+            </label>
+            <input
+              type="email"
+              id="loginEmail"
+              required
+              class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+              placeholder="seu@email.com"
+            />
+          </div>
+
+          <div>
+            <label for="loginPassword" class="block text-sm font-medium text-gray-700 mb-2">
+              <i class="fas fa-key mr-2"></i>Senha
+            </label>
+            <input
+              type="password"
+              id="loginPassword"
+              required
+              class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+              placeholder="••••••••"
+            />
+          </div>
+
+          <button
+            type="submit"
+            class="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 rounded-lg font-semibold hover:shadow-lg transform hover:scale-105 transition"
+          >
+            <i class="fas fa-sign-in-alt mr-2"></i>Entrar
+          </button>
+        </form>
+
+        <div id="loginError" class="mt-4 hidden">
+          <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
+            <i class="fas fa-exclamation-circle mr-2"></i>
+            <span id="loginErrorMessage"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dashboard -->
+    <div id="dashboard" class="hidden">
+      <!-- Top Navigation -->
+      <nav class="bg-white shadow-md sticky top-0 z-40" aria-label="Navegação principal do painel administrativo">
+        <div class="container mx-auto px-6 py-4 flex items-center justify-between">
+          <div class="flex items-center space-x-4">
+            <button id="toggleSidebar" class="lg:hidden text-gray-700">
+              <i class="fas fa-bars text-xl"></i>
+            </button>
+            <h1 class="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              Painel Administrativo
+            </h1>
+          </div>
+
+          <div class="flex items-center space-x-4">
+            <!-- User Menu -->
+            <div class="relative">
+              <button id="userMenuButton" class="flex items-center space-x-3 hover:bg-gray-100 rounded-lg px-3 py-2 transition">
+                <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+                  <i class="fas fa-user text-white"></i>
+                </div>
+                <div class="hidden md:block text-left">
+                  <p class="text-sm font-semibold text-gray-700" id="userName">Admin</p>
+                  <p class="text-xs text-gray-500" id="userEmail">admin@fundacao.com</p>
+                </div>
+                <i class="fas fa-chevron-down text-gray-500"></i>
+              </button>
+
+              <!-- Dropdown -->
+              <div id="userMenu" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 z-50">
+                <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                  <i class="fas fa-user mr-2"></i>Perfil
+                </a>
+                <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                  <i class="fas fa-cog mr-2"></i>Configurações
+                </a>
+                <hr class="my-2">
+                <button id="logoutButton" class="block w-full text-left px-4 py-2 text-red-600 hover:bg-red-50">
+                  <i class="fas fa-sign-out-alt mr-2"></i>Sair
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <div class="flex">
+        <!-- Sidebar -->
+        <aside id="sidebar" class="fixed lg:sticky top-0 left-0 h-screen lg:h-auto w-64 bg-white shadow-lg transform -translate-x-full lg:translate-x-0 transition-transform z-30">
+          <div class="p-6 overflow-y-auto h-full">
+            <nav class="space-y-2" aria-label="Menu lateral">
+              <a href="#" data-page="dashboard" class="sidebar-link active flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 transition">
+                <i class="fas fa-home w-5"></i>
+                <span>Dashboard</span>
+              </a>
+
+              <a href="#" data-page="home" class="sidebar-link flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 transition">
+                <i class="fas fa-house-user w-5"></i>
+                <span>Página Inicial</span>
+              </a>
+
+              <a href="#" data-page="receitas" class="sidebar-link flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 transition">
+                <i class="fas fa-money-bill-wave w-5"></i>
+                <span>Receitas</span>
+              </a>
+
+              <a href="#" data-page="galeria" class="sidebar-link flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 transition">
+                <i class="fas fa-images w-5"></i>
+                <span>Galeria</span>
+              </a>
+
+              <a href="#" data-page="stats" class="sidebar-link flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 transition">
+                <i class="fas fa-chart-bar w-5"></i>
+                <span>Estatísticas</span>
+              </a>
+
+              <hr class="my-4">
+
+              <a href="/" target="_blank" class="sidebar-link flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 transition">
+                <i class="fas fa-external-link-alt w-5"></i>
+                <span>Ver Site</span>
+              </a>
+            </nav>
+          </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-6 lg:p-8">
+          <div id="dashboardContent">
+            <!-- Content will be injected here -->
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toastContainer" class="fixed top-20 right-4 z-50 space-y-2"></div>
+
+    <!-- Scripts -->
+    <script type="module" src="./admin.js"></script>
+  </body>
+</html>

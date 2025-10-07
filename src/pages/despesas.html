@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Despesas - Fundação Escola Solidária</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    
+    <!-- CSS Organizado -->
+    <link rel="stylesheet" href="/src/styles/variables.css">
+    <link rel="stylesheet" href="/src/styles/reset.css">
+    <link rel="stylesheet" href="/src/styles/mae.css">
+    
+    <style>
+        body {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 2rem;
+        }
+        header {
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border-radius: 0.5rem;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+        .search-box, .filter-box {
+            margin-bottom: 1.5rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .search-box input, .filter-box input {
+            flex: 1;
+            padding: 0.75rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+        }
+        .search-box button, .filter-box button {
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        table thead {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+        table th, table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        table th {
+            cursor: pointer;
+        }
+        table tbody tr:hover {
+            background: #f9fafb;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 1rem;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <header>DESPESAS
+        
+    </header>
+    <div class="search-box">
+        <input type="text" id="search" placeholder="Buscar item..." onkeyup="filterTable()">
+        <button onclick="filterTable()" aria-label="Buscar">🔍</button>
+    </div>
+    <div class="filter-box">
+        <label for="start-date">De: </label>
+        <input type="date" id="start-date">
+        <label for="end-date">Até: </label>
+        <input type="date" id="end-date">
+        <button onclick="filterByDate()">Filtrar</button>
+    </div>
+    <table id="tabela">
+        <thead>
+            <tr>
+                <th onclick="sortTable(0)" aria-label="Ordenar por Item">Item</th>
+                <th onclick="sortTable(1)" aria-label="Ordenar por Data">Data</th>
+                <th onclick="sortTable(2)" aria-label="Ordenar por Valor">Valor</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>Alimentos</td><td>10/03/2025</td><td>2000.00</td></tr>
+            <tr><td>Material Escolar</td><td>15/03/2025</td><td>1500.00</td></tr>
+            <tr><td>Alimentos</td><td>10/03/2025</td><td>2000.00</td></tr>
+            <tr><td>Material Escolar</td><td>15/03/2025</td><td>1500.00</td></tr>
+            <tr><td>Alimentos</td><td>10/03/2025</td><td>2000.00</td></tr>
+            <tr><td>Material Escolar</td><td>15/03/2025</td><td>1500.00</td></tr>
+            <tr><td>Alimentos</td><td>10/03/2025</td><td>2000.00</td></tr>
+            <tr><td>Material Escolar</td><td>15/03/2025</td><td>1500.00</td></tr>
+        </tbody>
+    </table>
+    <p style="text-align:center; font-size:18px;"><strong>Total:</strong> <span id="total">R$ 0,00</span></p>
+    <div style="text-align:center;">
+        <button onclick="exportCSV()">Exportar CSV</button>
+        <button onclick="saveAsPDF()">Salvar como PDF</button>
+        <button onclick="window.location.href='transp.html'">Voltar</button>
+    </div>
+    <footer>© 2025 Fundação Escola Solidária</footer>
+</body>
+</html>

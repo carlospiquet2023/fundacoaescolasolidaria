@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestão Financeira - Fundação Escola Solidária</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 3rem;
+        }
+        
+        header h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            text-decoration: none;
+            border-radius: 0.5rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s;
+        }
+        
+        .back-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateX(-5px);
+        }
+        
+        /* Tela de Seleção */
+        .selection-screen {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            animation: fadeIn 0.5s;
+        }
+        
+        .selection-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 3rem 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+            border: none;
+            width: 100%;
+            font-family: inherit;
+        }
+        
+        .selection-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #11998e 0%, #38ef7d 100%);
+        }
+        
+        .selection-card.despesas::before {
+            background: linear-gradient(90deg, #eb3349 0%, #f45c43 100%);
+        }
+        
+        .selection-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        
+        .selection-card .icon {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+        }
+        
+        .selection-card.despesas .icon {
+            background: linear-gradient(135deg, #eb3349 0%, #f45c43 100%);
+        }
+        
+        .selection-card h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #1f2937;
+        }
+        
+        .selection-card p {
+            color: #6c757d;
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .selection-card .total {
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .selection-card.despesas .total {
+            background: linear-gradient(135deg, #eb3349 0%, #f45c43 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Tela de Tabela Excel */
+        .table-screen {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+        
+        .table-screen.active {
+            display: block;
+        }
+        
+        .table-header {
+            background: white;
+            padding: 1.5rem 2rem;
+            border-radius: 1rem 1rem 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .table-header h2 {
+            font-size: 1.8rem;
+            color: #1f2937;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .table-header .actions {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1rem;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+        }
+        
+        .btn-danger {
+            background: linear-gradient(135deg, #eb3349 0%, #f45c43 100%);
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        
+        /* Tabela Estilo Excel */
+        .excel-container {
+            background: white;
+            border-radius: 0 0 1rem 1rem;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .excel-table-wrapper {
+            overflow-x: auto;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        
+        .excel-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+        }
+        
+        .excel-table thead {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background: #f8f9fa;
+        }
+        
+        .excel-table th {
+            padding: 1rem;
+            text-align: left;
+            font-weight: 700;
+            color: #374151;
+            border: 1px solid #e5e7eb;
+            background: #f8f9fa;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+        }
+        
+        .excel-table td {
+            padding: 0.75rem 1rem;
+            border: 1px solid #e5e7eb;
+            background: white;
+            transition: all 0.2s;
+        }
+        
+        .excel-table tbody tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .excel-table tbody tr:nth-child(even) {
+            background: #f9fafb;
+        }
+        
+        .excel-table tbody tr:nth-child(even):hover {
+            background: #f3f4f6;
+        }
+        
+        /* Células Editáveis */
+        .excel-table td.editable {
+            cursor: text;
+            position: relative;
+        }
+        
+        .excel-table td.editable:hover {
+            background: #fffbeb;
+            box-shadow: inset 0 0 0 2px #fbbf24;
+        }
+        
+        .excel-table td.editable.editing {
+            padding: 0;
+        }
+        
+        .excel-table td input,
+        .excel-table td select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid #3b82f6;
+            background: white;
+            font-size: 0.95rem;
+            font-family: inherit;
+            outline: none;
+        }
+        
+        /* Coluna de Ações */
+        .excel-table .actions-cell {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+        }
+        
+        .action-btn {
+            padding: 0.5rem;
+            border: none;
+            background: none;
+            cursor: pointer;
+            color: #6c757d;
+            transition: all 0.2s;
+            border-radius: 0.25rem;
+            font-size: 1rem;
+        }
+        
+        .action-btn:hover {
+            background: #f3f4f6;
+        }
+        
+        .action-btn.edit:hover {
+            color: #3b82f6;
+        }
+        
+        .action-btn.delete:hover {
+            color: #ef4444;
+        }
+        
+        .action-btn.save:hover {
+            color: #10b981;
+        }
+        
+        /* Badge de Status */
+        .badge {
+            display: inline-block;
+            padding: 0.35rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .badge-success {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        
+        .badge-warning {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        
+        .badge-danger {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        
+        /* Linha de Totais */
+        .excel-table tfoot {
+            background: #f8f9fa;
+            font-weight: 700;
+            position: sticky;
+            bottom: 0;
+        }
+        
+        .excel-table tfoot td {
+            border: 2px solid #d1d5db;
+            padding: 1rem;
+            font-size: 1.1rem;
+        }
+        
+        /* Animações */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.3s;
+        }
+        
+        /* Linha Nova */
+        .new-row {
+            background: #ecfdf5 !important;
+            animation: highlightRow 1s;
+        }
+        
+        @keyframes highlightRow {
+            0% {
+                background: #d1fae5;
+            }
+            100% {
+                background: #ecfdf5;
+            }
+        }
+        
+        /* Responsivo */
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+            
+            header h1 {
+                font-size: 2rem;
+            }
+            
+            .selection-screen {
+                grid-template-columns: 1fr;
+            }
+            
+            .table-header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .table-header .actions {
+                width: 100%;
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .excel-table {
+                font-size: 0.85rem;
+            }
+            
+            .excel-table th,
+            .excel-table td {
+                padding: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/index.html" class="back-btn">
+            <i class="fas fa-arrow-left"></i> Voltar ao Início
+        </a>
+        
+        <header>
+            <h1><i class="fas fa-calculator"></i> Gestão Financeira</h1>
+            <p>Controle de Receitas e Despesas</p>
+            <div id="adminInfo" style="margin-top: 1rem; display: none;">
+                <span style="background: rgba(255,255,255,0.2); padding: 0.5rem 1rem; border-radius: 2rem; font-size: 0.9rem;">
+                    <i class="fas fa-user-shield"></i> Modo Administrador
+                </span>
+                <button onclick="logout()" style="background: rgba(255,255,255,0.2); border: none; color: white; padding: 0.5rem 1rem; border-radius: 2rem; margin-left: 0.5rem; cursor: pointer; font-family: inherit;">
+                    <i class="fas fa-sign-out-alt"></i> Sair
+                </button>
+            </div>
+            <div id="viewerInfo" style="margin-top: 1rem; display: none;">
+                <span style="background: rgba(255,255,255,0.2); padding: 0.5rem 1rem; border-radius: 2rem; font-size: 0.9rem;">
+                    <i class="fas fa-eye"></i> Modo Visualização (Somente Leitura)
+                </span>
+                <button onclick="redirectToLogin()" style="background: rgba(255,255,255,0.3); border: none; color: white; padding: 0.5rem 1rem; border-radius: 2rem; margin-left: 0.5rem; cursor: pointer; font-family: inherit;">
+                    <i class="fas fa-lock"></i> Login Admin
+                </button>
+            </div>
+        </header>
+        
+        <!-- Tela de Seleção -->
+        <div class="selection-screen" id="selectionScreen">
+            <button class="selection-card receitas" onclick="showTable('receitas')" aria-label="Abrir planilha de receitas">
+                <div class="icon">
+                    <i class="fas fa-arrow-up"></i>
+                </div>
+                <h2>Receitas</h2>
+                <p>Doações, Patrocínios e Outras Entradas</p>
+                <div class="total" id="totalReceitasDisplay">R$ 0,00</div>
+                <p style="font-size: 0.9rem; margin-top: 1rem; color: #9ca3af;">Clique para gerenciar</p>
+            </button>
+            
+            <button class="selection-card despesas" onclick="showTable('despesas')" aria-label="Abrir planilha de despesas">
+                <div class="icon">
+                    <i class="fas fa-arrow-down"></i>
+                </div>
+                <h2>Despesas</h2>
+                <p>Custos Operacionais e Investimentos</p>
+                <div class="total" id="totalDespesasDisplay">R$ 0,00</div>
+                <p style="font-size: 0.9rem; margin-top: 1rem; color: #9ca3af;">Clique para gerenciar</p>
+            </button>
+        </div>
+        
+        <!-- Tela de Tabela - Receitas -->
+        <div class="table-screen" id="receitasTable">
+            <div class="excel-container">
+                <div class="table-header">
+                    <h2>
+                        <i class="fas fa-arrow-up" style="color: #11998e;"></i>
+                        Planilha de Receitas
+                    </h2>
+                    <div class="actions">
+                        <button class="btn btn-success" onclick="addNewRow('receitas')">
+                            <i class="fas fa-plus"></i> Nova Receita
+                        </button>
+                        <button class="btn btn-secondary" onclick="backToSelection()">
+                            <i class="fas fa-arrow-left"></i> Voltar
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="excel-table-wrapper">
+                    <table class="excel-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 120px;">Data</th>
+                                <th style="width: 250px;">Descrição</th>
+                                <th style="width: 150px;">Categoria</th>
+                                <th style="width: 130px;">Valor (R$)</th>
+                                <th style="width: 120px;">Status</th>
+                                <th style="width: 200px;">Observações</th>
+                                <th style="width: 100px;">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="receitasTableBody">
+                            <tr>
+                                <td colspan="7" style="text-align: center; padding: 3rem; color: #9ca3af;">
+                                    <i class="fas fa-inbox" style="font-size: 3rem; margin-bottom: 1rem; display: block;"></i>
+                                    Nenhuma receita cadastrada. Clique em "Nova Receita" para começar.
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="3" style="text-align: right;">TOTAL:</td>
+                                <td id="totalReceitas" style="color: #11998e;">R$ 0,00</td>
+                                <td colspan="3"></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Tela de Tabela - Despesas -->
+        <div class="table-screen" id="despesasTable">
+            <div class="excel-container">
+                <div class="table-header">
+                    <h2>
+                        <i class="fas fa-arrow-down" style="color: #eb3349;"></i>
+                        Planilha de Despesas
+                    </h2>
+                    <div class="actions">
+                        <button class="btn btn-danger" onclick="addNewRow('despesas')">
+                            <i class="fas fa-plus"></i> Nova Despesa
+                        </button>
+                        <button class="btn btn-secondary" onclick="backToSelection()">
+                            <i class="fas fa-arrow-left"></i> Voltar
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="excel-table-wrapper">
+                    <table class="excel-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 120px;">Data</th>
+                                <th style="width: 250px;">Descrição</th>
+                                <th style="width: 150px;">Categoria</th>
+                                <th style="width: 130px;">Valor (R$)</th>
+                                <th style="width: 120px;">Status</th>
+                                <th style="width: 200px;">Observações</th>
+                                <th style="width: 100px;">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="despesasTableBody">
+                            <tr>
+                                <td colspan="7" style="text-align: center; padding: 3rem; color: #9ca3af;">
+                                    <i class="fas fa-inbox" style="font-size: 3rem; margin-bottom: 1rem; display: block;"></i>
+                                    Nenhuma despesa cadastrada. Clique em "Nova Despesa" para começar.
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="3" style="text-align: right;">TOTAL:</td>
+                                <td id="totalDespesas" style="color: #eb3349;">R$ 0,00</td>
+                                <td colspan="3"></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Dados
+        let receitas = [];
+        let despesas = [];
+        
+        // Formatadores
+        function formatCurrency(value) {
+            return new Intl.NumberFormat('pt-BR', {
+                style: 'currency',
+                currency: 'BRL'
+            }).format(value);
+        }
+        
+        function formatDate(dateString) {
+            if (!dateString) return '';
+            const date = new Date(dateString + 'T00:00:00');
+            return date.toLocaleDateString('pt-BR');
+        }
+        
+        function parseDate(dateStr) {
+            if (!dateStr) return '';
+            const parts = dateStr.split('/');
+            if (parts.length === 3) {
+                return `${parts[2]}-${parts[1].padStart(2, '0')}-${parts[0].padStart(2, '0')}`;
+            }
+            return dateStr;
+        }
+        
+        // Navegação
+        function showTable(type) {
+            document.getElementById('selectionScreen').style.display = 'none';
+            if (type === 'receitas') {
+                document.getElementById('receitasTable').classList.add('active');
+            } else {
+                document.getElementById('despesasTable').classList.add('active');
+            }
+        }
+        
+        function backToSelection() {
+            document.getElementById('receitasTable').classList.remove('active');
+            document.getElementById('despesasTable').classList.remove('active');
+            document.getElementById('selectionScreen').style.display = 'grid';
+            updateTotals();
+        }
+        
+        // Adicionar Nova Linha
+        function addNewRow(type) {
+            const today = new Date().toISOString().split('T')[0];
+            const newItem = {
+                data: today,
+                descricao: '',
+                categoria: type === 'receitas' ? 'doacao' : 'alimentacao',
+                valor: 0,
+                status: 'pendente',
+                observacoes: '',
+                isNew: true
+            };
+            
+            if (type === 'receitas') {
+                receitas.push(newItem);
+                renderReceitas();
+            } else {
+                despesas.push(newItem);
+                renderDespesas();
+            }
+            
+            // Auto-salvar
+            saveToLocalStorage();
+        }
+        
+        // Renderizar Receitas
+        function renderReceitas() {
+            const tbody = document.getElementById('receitasTableBody');
+            
+            if (receitas.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="7" style="text-align: center; padding: 3rem; color: #9ca3af;">
+                            <i class="fas fa-inbox" style="font-size: 3rem; margin-bottom: 1rem; display: block;"></i>
+                            Nenhuma receita cadastrada. Clique em "Nova Receita" para começar.
+                        </td>
+                    </tr>
+                `;
+                updateTotals();
+                return;
+            }
+            
+            tbody.innerHTML = receitas.map((r, index) => {
+                const rowClass = r.isNew ? 'new-row' : '';
+                return `
+                    <tr class="${rowClass}">
+                        <td class="editable" data-field="data" data-index="${index}" data-type="receitas" onclick="editCell(this)">
+                            ${formatDate(r.data)}
+                        </td>
+                        <td class="editable" data-field="descricao" data-index="${index}" data-type="receitas" onclick="editCell(this)">
+                            ${r.descricao || '<em style="color: #9ca3af;">Clique para editar</em>'}
+                        </td>
+                        <td class="editable" data-field="categoria" data-index="${index}" data-type="receitas" onclick="editCell(this)">
+                            ${getCategoryLabel(r.categoria, 'receitas')}
+                        </td>
+                        <td class="editable" data-field="valor" data-index="${index}" data-type="receitas" onclick="editCell(this)">
+                            <strong>${formatCurrency(r.valor)}</strong>
+                        </td>
+                        <td class="editable" data-field="status" data-index="${index}" data-type="receitas" onclick="editCell(this)">
+                            ${getStatusBadge(r.status, 'receitas')}
+                        </td>
+                        <td class="editable" data-field="observacoes" data-index="${index}" data-type="receitas" onclick="editCell(this)">
+                            ${r.observacoes || '<em style="color: #9ca3af;">-</em>'}
+                        </td>
+                        <td>
+                            <div class="actions-cell">
+                                <button class="action-btn delete" onclick="deleteRow(${index}, 'receitas')" title="Excluir">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+            
+            // Remover flag isNew após renderizar
+            receitas.forEach(r => {
+                delete r.isNew;
+            });
+            
+            updateTotals();
+        }
+        
+        // Renderizar Despesas
+        function renderDespesas() {
+            const tbody = document.getElementById('despesasTableBody');
+            
+            if (despesas.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="7" style="text-align: center; padding: 3rem; color: #9ca3af;">
+                            <i class="fas fa-inbox" style="font-size: 3rem; margin-bottom: 1rem; display: block;"></i>
+                            Nenhuma despesa cadastrada. Clique em "Nova Despesa" para começar.
+                        </td>
+                    </tr>
+                `;
+                updateTotals();
+                return;
+            }
+            
+            tbody.innerHTML = despesas.map((d, index) => {
+                const rowClass = d.isNew ? 'new-row' : '';
+                return `
+                    <tr class="${rowClass}">
+                        <td class="editable" data-field="data" data-index="${index}" data-type="despesas" onclick="editCell(this)">
+                            ${formatDate(d.data)}
+                        </td>
+                        <td class="editable" data-field="descricao" data-index="${index}" data-type="despesas" onclick="editCell(this)">
+                            ${d.descricao || '<em style="color: #9ca3af;">Clique para editar</em>'}
+                        </td>
+                        <td class="editable" data-field="categoria" data-index="${index}" data-type="despesas" onclick="editCell(this)">
+                            ${getCategoryLabel(d.categoria, 'despesas')}
+                        </td>
+                        <td class="editable" data-field="valor" data-index="${index}" data-type="despesas" onclick="editCell(this)">
+                            <strong>${formatCurrency(d.valor)}</strong>
+                        </td>
+                        <td class="editable" data-field="status" data-index="${index}" data-type="despesas" onclick="editCell(this)">
+                            ${getStatusBadge(d.status, 'despesas')}
+                        </td>
+                        <td class="editable" data-field="observacoes" data-index="${index}" data-type="despesas" onclick="editCell(this)">
+                            ${d.observacoes || '<em style="color: #9ca3af;">-</em>'}
+                        </td>
+                        <td>
+                            <div class="actions-cell">
+                                <button class="action-btn delete" onclick="deleteRow(${index}, 'despesas')" title="Excluir">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+            
+            // Remover flag isNew após renderizar
+            despesas.forEach(d => {
+                delete d.isNew;
+            });
+            
+            updateTotals();
+        }
+        
+        // Editar Célula
+        function editCell(cell) {
+            if (cell.classList.contains('editing')) return;
+            
+            const field = cell.dataset.field;
+            const index = parseInt(cell.dataset.index);
+            const type = cell.dataset.type;
+            const data = type === 'receitas' ? receitas[index] : despesas[index];
+            const currentValue = data[field];
+            
+            cell.classList.add('editing');
+            
+            let inputHtml = '';
+            
+            if (field === 'data') {
+                inputHtml = `<input type="date" value="${currentValue}" autofocus>`;
+            } else if (field === 'categoria') {
+                const options = type === 'receitas' 
+                    ? '<option value="doacao">Doação</option><option value="patrocinio">Patrocínio</option><option value="evento">Evento</option><option value="mensalidade">Mensalidade</option><option value="outros">Outros</option>'
+                    : '<option value="alimentacao">Alimentação</option><option value="educacao">Educação</option><option value="infraestrutura">Infraestrutura</option><option value="pessoal">Pessoal</option><option value="transporte">Transporte</option><option value="outros">Outros</option>';
+                inputHtml = `<select autofocus>${options}</select>`;
+            } else if (field === 'status') {
+                const options = type === 'receitas'
+                    ? '<option value="confirmado">Confirmado</option><option value="pendente">Pendente</option>'
+                    : '<option value="pago">Pago</option><option value="pendente">Pendente</option><option value="vencido">Vencido</option>';
+                inputHtml = `<select autofocus>${options}</select>`;
+            } else if (field === 'valor') {
+                inputHtml = `<input type="number" step="0.01" value="${currentValue}" autofocus>`;
+            } else {
+                inputHtml = `<input type="text" value="${currentValue || ''}" autofocus>`;
+            }
+            
+            cell.innerHTML = inputHtml;
+            const input = cell.querySelector('input, select');
+            
+            if (input.tagName === 'SELECT') {
+                input.value = currentValue;
+            }
+            
+            input.focus();
+            
+            if (input.tagName === 'INPUT' && input.type === 'text') {
+                input.select();
+            }
+            
+            input.addEventListener('blur', () => saveCell(cell, input, field, index, type));
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    input.blur();
+                } else if (e.key === 'Escape') {
+                    cell.classList.remove('editing');
+                    if (type === 'receitas') {
+                        renderReceitas();
+                    } else {
+                        renderDespesas();
+                    }
+                }
+            });
+        }
+        
+        // Salvar Célula
+        function saveCell(cell, input, field, index, type) {
+            const newValue = input.value;
+            const data = type === 'receitas' ? receitas : despesas;
+            
+            if (field === 'valor') {
+                data[index][field] = parseFloat(newValue) || 0;
+            } else {
+                data[index][field] = newValue;
+            }
+            
+            cell.classList.remove('editing');
+            
+            if (type === 'receitas') {
+                renderReceitas();
+            } else {
+                renderDespesas();
+            }
+            
+            // Auto-salvar
+            saveToLocalStorage();
+        }
+        
+        // Excluir Linha
+        function deleteRow(index, type) {
+            if (!confirm('Deseja realmente excluir este registro?')) return;
+            
+            if (type === 'receitas') {
+                receitas.splice(index, 1);
+                renderReceitas();
+            } else {
+                despesas.splice(index, 1);
+                renderDespesas();
+            }
+            
+            // Auto-salvar
+            saveToLocalStorage();
+        }
+        
+        // Atualizar Totais
+        function updateTotals() {
+            const totalRec = receitas.reduce((sum, r) => sum + parseFloat(r.valor || 0), 0);
+            const totalDesp = despesas.reduce((sum, d) => sum + parseFloat(d.valor || 0), 0);
+            
+            document.getElementById('totalReceitas').textContent = formatCurrency(totalRec);
+            document.getElementById('totalDespesas').textContent = formatCurrency(totalDesp);
+            document.getElementById('totalReceitasDisplay').textContent = formatCurrency(totalRec);
+            document.getElementById('totalDespesasDisplay').textContent = formatCurrency(totalDesp);
+        }
+        
+        // Helpers
+        function getCategoryLabel(categoria, type) {
+            const labels = {
+                receitas: {
+                    doacao: 'Doação',
+                    patrocinio: 'Patrocínio',
+                    evento: 'Evento',
+                    mensalidade: 'Mensalidade',
+                    outros: 'Outros'
+                },
+                despesas: {
+                    alimentacao: 'Alimentação',
+                    educacao: 'Educação',
+                    infraestrutura: 'Infraestrutura',
+                    pessoal: 'Pessoal',
+                    transporte: 'Transporte',
+                    outros: 'Outros'
+                }
+            };
+            return labels[type][categoria] || categoria;
+        }
+        
+        function getStatusBadge(status, type) {
+            const badges = {
+                receitas: {
+                    confirmado: '<span class="badge badge-success">Confirmado</span>',
+                    pendente: '<span class="badge badge-warning">Pendente</span>'
+                },
+                despesas: {
+                    pago: '<span class="badge badge-success">Pago</span>',
+                    pendente: '<span class="badge badge-warning">Pendente</span>',
+                    vencido: '<span class="badge badge-danger">Vencido</span>'
+                }
+            };
+            return badges[type][status] || status;
+        }
+        
+        // Salvar em LocalStorage
+        function saveToLocalStorage() {
+            localStorage.setItem('receitas', JSON.stringify(receitas));
+            localStorage.setItem('despesas', JSON.stringify(despesas));
+        }
+        
+        function loadFromLocalStorage() {
+            const savedReceitas = localStorage.getItem('receitas');
+            const savedDespesas = localStorage.getItem('despesas');
+            
+            if (savedReceitas) {
+                receitas = JSON.parse(savedReceitas);
+            }
+            if (savedDespesas) {
+                despesas = JSON.parse(savedDespesas);
+            }
+            
+            updateTotals();
+        }
+        
+        // Auto-salvar ao fazer alterações
+        window.addEventListener('beforeunload', saveToLocalStorage);
+        
+        // ========================================
+        // CONTROLE DE PERMISSÕES ADMIN
+        // ========================================
+        
+        let isAdmin = false;
+        
+        // Verificar se usuário é admin
+        function checkAdminStatus() {
+            isAdmin = localStorage.getItem('adminAuthenticated') === 'true';
+            
+            if (isAdmin) {
+                document.getElementById('adminInfo').style.display = 'block';
+                document.getElementById('viewerInfo').style.display = 'none';
+            } else {
+                document.getElementById('adminInfo').style.display = 'none';
+                document.getElementById('viewerInfo').style.display = 'block';
+                disableEditMode();
+            }
+        }
+        
+        // Desabilitar modo de edição para visualizadores
+        function disableEditMode() {
+            // Ocultar botões de adicionar
+            const addButtons = document.querySelectorAll('.btn-success, .btn-danger');
+            addButtons.forEach(btn => {
+                if (btn.textContent.includes('Nova')) {
+                    btn.style.display = 'none';
+                }
+            });
+            
+            // Remover onclick dos cards de seleção
+            const selectionCards = document.querySelectorAll('.selection-card');
+            selectionCards.forEach(card => {
+                const originalOnClick = card.getAttribute('onclick');
+                card.setAttribute('data-original-onclick', originalOnClick);
+                card.setAttribute('onclick', 'showReadOnlyMessage()');
+                card.style.cursor = 'pointer';
+            });
+            
+            // Adicionar mensagem visual
+            const selectionScreen = document.getElementById('selectionScreen');
+            if (selectionScreen && !document.getElementById('readOnlyBanner')) {
+                const banner = document.createElement('div');
+                banner.id = 'readOnlyBanner';
+                banner.style.cssText = 'background: rgba(255,255,255,0.95); padding: 1rem; border-radius: 1rem; text-align: center; margin-bottom: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.1);';
+                banner.innerHTML = `
+                    <i class="fas fa-info-circle" style="color: #3b82f6; font-size: 1.5rem;"></i>
+                    <p style="color: #1f2937; margin-top: 0.5rem; font-weight: 600;">
+                        Você está no modo visualização. Para editar os dados, faça login como administrador.
+                    </p>
+                `;
+                selectionScreen.parentNode.insertBefore(banner, selectionScreen);
+            }
+        }
+        
+        // Mensagem para usuários não autenticados
+        function showReadOnlyMessage() {
+            if (confirm('Esta área é restrita a administradores.\n\nDeseja fazer login para editar os dados?')) {
+                redirectToLogin();
+            }
+        }
+        
+        // Redirecionar para login
+        function redirectToLogin() {
+            window.location.href = './admin-login.html?redirect=' + encodeURIComponent(window.location.pathname);
+        }
+        
+        // Logout
+        function logout() {
+            if (confirm('Deseja realmente sair do modo administrador?')) {
+                localStorage.removeItem('adminAuthenticated');
+                localStorage.removeItem('adminUsername');
+                localStorage.removeItem('adminLoginTime');
+                window.location.reload();
+            }
+        }
+        
+        // Proteger funções de edição - Envolver as funções originais
+        (function() {
+            const _addNewRow = addNewRow;
+            addNewRow = function(type) {
+                if (!isAdmin) {
+                    showReadOnlyMessage();
+                    return;
+                }
+                _addNewRow(type);
+            };
+            
+            const _editCell = editCell;
+            editCell = function(cell) {
+                if (!isAdmin) {
+                    showReadOnlyMessage();
+                    return;
+                }
+                _editCell(cell);
+            };
+            
+            const _deleteRow = deleteRow;
+            deleteRow = function(index, type) {
+                if (!isAdmin) {
+                    showReadOnlyMessage();
+                    return;
+                }
+                _deleteRow(index, type);
+            };
+        })();
+        
+        // Inicializar controle de permissões
+        checkAdminStatus();
+        
+        // Carregar ao iniciar
+        loadFromLocalStorage();
+    </script>
+</body>
+</html>

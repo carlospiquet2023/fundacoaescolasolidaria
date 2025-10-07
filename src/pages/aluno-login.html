@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login do Aluno - Fundação Escola Solidária</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .login-container {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .login-card {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
+        }
+        
+        .input-group {
+            position: relative;
+        }
+        
+        .input-group input {
+            padding-left: 2.5rem;
+        }
+        
+        .input-icon {
+            position: absolute;
+            left: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9ca3af;
+        }
+        
+        .loading {
+            border: 3px solid #f3f4f6;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .alert {
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            display: none;
+        }
+        
+        .alert.show {
+            display: block;
+            animation: slideDown 0.3s ease-out;
+        }
+        
+        .alert-error {
+            background-color: #fee2e2;
+            color: #991b1b;
+            border-left: 4px solid #dc2626;
+        }
+        
+        .alert-success {
+            background-color: #d1fae5;
+            color: #065f46;
+            border-left: 4px solid #10b981;
+        }
+        
+        .alert-info {
+            background-color: #dbeafe;
+            color: #1e40af;
+            border-left: 4px solid #3b82f6;
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .welcome-banner {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            border-left: 4px solid #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container flex items-center justify-center p-4">
+        <div class="login-card rounded-2xl shadow-2xl w-full max-w-md p-8">
+            <!-- Logo e Título -->
+            <div class="text-center mb-8">
+                <div class="w-20 h-20 gradient-bg rounded-full mx-auto mb-4 flex items-center justify-center">
+                    <i class="fas fa-graduation-cap text-white text-3xl"></i>
+                </div>
+                <h1 class="text-3xl font-bold text-gray-800 mb-2">
+                    Área do Aluno
+                </h1>
+                <p class="text-gray-600">
+                    Fundação Escola Solidária
+                </p>
+            </div>
+            
+            <!-- Banner de Boas-vindas -->
+            <div class="welcome-banner p-4 rounded-lg mb-6">
+                <div class="flex items-start">
+                    <i class="fas fa-info-circle text-blue-600 mt-1 mr-3"></i>
+                    <div>
+                        <h3 class="font-semibold text-gray-800 mb-1">Bem-vindo!</h3>
+                        <p class="text-sm text-gray-600">
+                            Faça login para acessar sua ficha de matrícula, 
+                            enviar documentos e acompanhar seu cadastro.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Alert -->
+            <div id="alertBox" class="alert"></div>
+            
+            <!-- Formulário de Login -->
+            <form id="formLogin" class="space-y-6">
+                <!-- Usuário -->
+                <div class="input-group">
+                    <i class="fas fa-user input-icon"></i>
+                    <input 
+                        type="text" 
+                        id="usuario" 
+                        name="usuario" 
+                        required
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition"
+                        placeholder="Seu usuário"
+                        autocomplete="username"
+                    >
+                </div>
+                
+                <!-- Senha -->
+                <div class="input-group">
+                    <i class="fas fa-lock input-icon"></i>
+                    <input 
+                        type="password" 
+                        id="senha" 
+                        name="senha" 
+                        required
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition"
+                        placeholder="Sua senha"
+                        autocomplete="current-password"
+                    >
+                    <button 
+                        type="button" 
+                        onclick="toggleSenha()"
+                        class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                    >
+                        <i id="eyeIcon" class="fas fa-eye"></i>
+                    </button>
+                </div>
+                
+                <!-- Lembrar-me -->
+                <div class="flex items-center justify-between">
+                    <label class="flex items-center">
+                        <input type="checkbox" id="lembrarMe" class="w-4 h-4 text-purple-600 rounded focus:ring-purple-500">
+                        <span class="ml-2 text-sm text-gray-600">Lembrar-me</span>
+                    </label>
+                    <a href="#" class="text-sm text-purple-600 hover:underline">
+                        Esqueci minha senha
+                    </a>
+                </div>
+                
+                <!-- Botão Entrar -->
+                <button 
+                    type="submit" 
+                    id="btnLogin"
+                    class="w-full gradient-bg text-white py-3 rounded-lg font-semibold hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200"
+                >
+                    <span id="btnTexto">
+                        <i class="fas fa-sign-in-alt mr-2"></i>
+                        Entrar
+                    </span>
+                    <div id="btnLoading" class="loading mx-auto hidden"></div>
+                </button>
+            </form>
+            
+            <!-- Informações para Novos Alunos -->
+            <div class="mt-6 p-4 bg-gray-50 rounded-lg">
+                <p class="text-sm text-gray-600 text-center">
+                    <i class="fas fa-question-circle mr-1"></i>
+                    <strong>Ainda não tem acesso?</strong>
+                </p>
+                <p class="text-xs text-gray-500 text-center mt-2">
+                    Entre em contato com a secretaria da escola para receber suas credenciais de acesso.
+                </p>
+            </div>
+            
+            <!-- Rodapé -->
+            <div class="mt-6 text-center text-sm text-gray-600">
+                <p>
+                    <a href="../../index.html" class="text-purple-600 hover:underline">
+                        <i class="fas fa-arrow-left mr-1"></i>
+                        Voltar ao site
+                    </a>
+                </p>
+                <p class="mt-2 text-xs">
+                    <a href="admin-login.html" class="text-gray-500 hover:text-gray-700">
+                        Acesso administrativo
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Scripts -->
+    <script src="../utils/api-auth.js"></script>
+    <script>
+        // Verificar se já está logado
+        document.addEventListener('DOMContentLoaded', () => {
+            if (apiAuth.isAuthenticated()) {
+                const usuario = apiAuth.getUsuarioLocal();
+                
+                // Se for admin, redirecionar para painel admin
+                if (usuario && usuario.role === 'admin') {
+                    window.location.href = '../../admin/gestao-alunos.html';
+                } else {
+                    // Aluno já logado, ir para dashboard
+                    window.location.href = 'aluno-dashboard.html';
+                }
+            }
+        });
+        
+        // Função para mostrar alerta
+        function mostrarAlerta(mensagem, tipo = 'error') {
+            const alertBox = document.getElementById('alertBox');
+            alertBox.textContent = mensagem;
+            alertBox.className = `alert alert-${tipo} show`;
+            
+            setTimeout(() => {
+                alertBox.classList.remove('show');
+            }, 5000);
+        }
+        
+        // Função para alternar visibilidade da senha
+        function toggleSenha() {
+            const senhaInput = document.getElementById('senha');
+            const eyeIcon = document.getElementById('eyeIcon');
+            
+            if (senhaInput.type === 'password') {
+                senhaInput.type = 'text';
+                eyeIcon.classList.remove('fa-eye');
+                eyeIcon.classList.add('fa-eye-slash');
+            } else {
+                senhaInput.type = 'password';
+                eyeIcon.classList.remove('fa-eye-slash');
+                eyeIcon.classList.add('fa-eye');
+            }
+        }
+        
+        // Função para alternar loading
+        function toggleLoading(carregando) {
+            const btnLogin = document.getElementById('btnLogin');
+            const btnTexto = document.getElementById('btnTexto');
+            const btnLoading = document.getElementById('btnLoading');
+            
+            if (carregando) {
+                btnLogin.disabled = true;
+                btnTexto.classList.add('hidden');
+                btnLoading.classList.remove('hidden');
+            } else {
+                btnLogin.disabled = false;
+                btnTexto.classList.remove('hidden');
+                btnLoading.classList.add('hidden');
+            }
+        }
+        
+        // Handler do formulário
+        document.getElementById('formLogin').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const usuario = document.getElementById('usuario').value.trim();
+            const senha = document.getElementById('senha').value;
+            
+            if (!usuario || !senha) {
+                mostrarAlerta('Por favor, preencha todos os campos', 'error');
+                return;
+            }
+            
+            toggleLoading(true);
+            
+            try {
+                const resultado = await apiAuth.login(usuario, senha);
+                
+                if (resultado.sucesso) {
+                    // Verificar role
+                    if (resultado.usuario.role === 'admin') {
+                        mostrarAlerta('Redirecionando para painel administrativo...', 'success');
+                        setTimeout(() => {
+                            window.location.href = '../../admin/gestao-alunos.html';
+                        }, 1000);
+                    } else {
+                        // Verificar primeiro acesso
+                        if (resultado.usuario.primeiroAcesso) {
+                            mostrarAlerta('Bem-vindo! Complete seu cadastro.', 'info');
+                        } else {
+                            mostrarAlerta('Login realizado com sucesso!', 'success');
+                        }
+                        
+                        setTimeout(() => {
+                            window.location.href = 'aluno-dashboard.html';
+                        }, 1000);
+                    }
+                } else {
+                    mostrarAlerta(resultado.mensagem || 'Erro ao fazer login. Verifique suas credenciais.', 'error');
+                    toggleLoading(false);
+                }
+            } catch (error) {
+                console.error('Erro ao fazer login:', error);
+                mostrarAlerta('Erro ao conectar com o servidor. Tente novamente.', 'error');
+                toggleLoading(false);
+            }
+        });
+        
+        // Enter no usuário vai para senha
+        document.getElementById('usuario').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                document.getElementById('senha').focus();
+            }
+        });
+    </script>
+</body>
+</html>

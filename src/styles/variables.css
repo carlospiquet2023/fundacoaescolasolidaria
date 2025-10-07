@@ -1,0 +1,175 @@
+/**
+ * Design System - Design Tokens & CSS Variables
+ * Fundação Escola Solidária
+ * Sistema profissional de variáveis para garantir consistência visual
+ */
+
+:root {
+  /* === PALETA DE CORES PRINCIPAL === */
+  --color-primary-50: #e3f0ff;
+  --color-primary-100: #b3d9ff;
+  --color-primary-200: #80c2ff;
+  --color-primary-300: #4dabff;
+  --color-primary-400: #269aff;
+  --color-primary-500: #0762d9;
+  --color-primary-600: #0553b8;
+  --color-primary-700: #044497;
+  --color-primary-800: #033575;
+  --color-primary-900: #012654;
+
+  --color-secondary-50: #e6faf0;
+  --color-secondary-100: #b3f0d2;
+  --color-secondary-200: #80e6b5;
+  --color-secondary-300: #4ddc97;
+  --color-secondary-400: #30d979;
+  --color-secondary-500: #26b662;
+  --color-secondary-600: #1f934f;
+  --color-secondary-700: #18703b;
+  --color-secondary-800: #114d28;
+  --color-secondary-900: #0a2a15;
+
+  --color-accent-50: #fde8e8;
+  --color-accent-100: #f9b8b8;
+  --color-accent-200: #f58888;
+  --color-accent-300: #f15858;
+  --color-accent-400: #e74c3c;
+  --color-accent-500: #c0392b;
+  --color-accent-600: #992e22;
+  --color-accent-700: #732319;
+  --color-accent-800: #4c1710;
+  --color-accent-900: #260c08;
+
+  /* === CORES NEUTRAS === */
+  --color-neutral-50: #fafafa;
+  --color-neutral-100: #f5f5f5;
+  --color-neutral-200: #e5e5e5;
+  --color-neutral-300: #d4d4d4;
+  --color-neutral-400: #a3a3a3;
+  --color-neutral-500: #737373;
+  --color-neutral-600: #525252;
+  --color-neutral-700: #404040;
+  --color-neutral-800: #262626;
+  --color-neutral-900: #171717;
+
+  /* === CORES DE ESTADO === */
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+  --color-info: #3b82f6;
+
+  /* === TIPOGRAFIA === */
+  --font-family-sans: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  --font-family-display: 'Roboto', 'Nunito', Arial, sans-serif;
+  
+  --font-size-xs: 0.75rem;    /* 12px */
+  --font-size-sm: 0.875rem;   /* 14px */
+  --font-size-base: 1rem;     /* 16px */
+  --font-size-lg: 1.125rem;   /* 18px */
+  --font-size-xl: 1.25rem;    /* 20px */
+  --font-size-2xl: 1.5rem;    /* 24px */
+  --font-size-3xl: 1.875rem;  /* 30px */
+  --font-size-4xl: 2.25rem;   /* 36px */
+  --font-size-5xl: 3rem;      /* 48px */
+
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+  --font-weight-black: 900;
+
+  --line-height-tight: 1.25;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.75;
+  --line-height-loose: 2;
+
+  /* === ESPAÇAMENTO === */
+  --spacing-0: 0;
+  --spacing-1: 0.25rem;   /* 4px */
+  --spacing-2: 0.5rem;    /* 8px */
+  --spacing-3: 0.75rem;   /* 12px */
+  --spacing-4: 1rem;      /* 16px */
+  --spacing-5: 1.25rem;   /* 20px */
+  --spacing-6: 1.5rem;    /* 24px */
+  --spacing-8: 2rem;      /* 32px */
+  --spacing-10: 2.5rem;   /* 40px */
+  --spacing-12: 3rem;     /* 48px */
+  --spacing-16: 4rem;     /* 64px */
+  --spacing-20: 5rem;     /* 80px */
+  --spacing-24: 6rem;     /* 96px */
+
+  /* === BORDAS === */
+  --radius-none: 0;
+  --radius-sm: 0.25rem;   /* 4px */
+  --radius-base: 0.5rem;  /* 8px */
+  --radius-md: 0.75rem;   /* 12px */
+  --radius-lg: 1rem;      /* 16px */
+  --radius-xl: 1.5rem;    /* 24px */
+  --radius-2xl: 2rem;     /* 32px */
+  --radius-full: 9999px;
+
+  /* === SOMBRAS === */
+  --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+  --shadow-base: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  --shadow-soft: 0 2px 12px rgba(7, 98, 217, 0.1);
+  --shadow-medium: 0 4px 24px rgba(7, 98, 217, 0.15);
+  --shadow-strong: 0 8px 32px rgba(7, 98, 217, 0.2);
+
+  /* === TRANSIÇÕES === */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* === Z-INDEX === */
+  --z-dropdown: 1000;
+  --z-sticky: 1020;
+  --z-fixed: 1030;
+  --z-modal-backdrop: 1040;
+  --z-modal: 1050;
+  --z-popover: 1060;
+  --z-tooltip: 1070;
+
+  /* === LIGHT THEME (DEFAULT) === */
+  --background-primary: #ffffff;
+  --background-secondary: #f6fdfd;
+  --background-tertiary: #e3f0ff;
+  --background-gradient: linear-gradient(135deg, #e3f0ff 0%, #a6cff5 100%);
+  
+  --text-primary: #222222;
+  --text-secondary: #525252;
+  --text-tertiary: #737373;
+  --text-inverse: #ffffff;
+  
+  --border-color: #e5e5e5;
+  --divider-color: #d4d4d4;
+}
+
+/* === DARK THEME === */
+.dark-mode {
+  --background-primary: #1a1a1a;
+  --background-secondary: #262626;
+  --background-tertiary: #333333;
+  --background-gradient: linear-gradient(135deg, #1a1a1a 0%, #2d3748 100%);
+  
+  --text-primary: #f5f5f5;
+  --text-secondary: #d4d4d4;
+  --text-tertiary: #a3a3a3;
+  --text-inverse: #222222;
+  
+  --border-color: #404040;
+  --divider-color: #525252;
+
+  --shadow-soft: 0 2px 12px rgba(0, 0, 0, 0.3);
+  --shadow-medium: 0 4px 24px rgba(0, 0, 0, 0.4);
+  --shadow-strong: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+/* === BREAKPOINTS (via media queries) === */
+/* Mobile: < 640px */
+/* Tablet: 640px - 1024px */
+/* Desktop: > 1024px */
