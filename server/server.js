@@ -24,6 +24,7 @@ import receitasRoutes from './routes/receitas.routes.js';
 import uploadRoutes from './routes/upload.routes.js';
 import autenticacaoRoutes from './routes/autenticacao.routes.js';
 import alunosRoutes from './routes/alunos.routes.js';
+import setupRoutes from './routes/setup.routes.js';
 import { errorHandler } from './middleware/errorHandler.js';
 
 // Configuração de __dirname para ES modules
@@ -167,6 +168,9 @@ app.use('/api/auth', authRoutes);
 // Novas rotas de autenticação JWT
 app.use('/api/autenticacao', autenticacaoRoutes);
 app.use('/api/alunos', alunosRoutes);
+
+// Rota de setup/inicialização do banco
+app.use('/api/setup', setupRoutes);
 
 // Rotas de conteúdo (protegidas)
 app.use('/api/home', homeRoutes);
