@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#0762d9">
+    <title>Fundação Escola Solidária</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="src/styles/mae.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Meta tags SEO -->
+    <meta name="description" content="Fundação Escola Solidária - Transformando vidas através da educação de qualidade">
+    <meta name="keywords" content="educação, fundação, escola, solidária, ensino, crianças">
+    <meta name="author" content="Fundação Escola Solidária">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Fundação Escola Solidária">
+    <meta property="og:description" content="Transformando vidas através da educação de qualidade">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="public/assets/images/logo bel.png">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="public/assets/images/logo bel.png">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <h1>Fundação Escola Solidária</h1>
+        <img src="public/assets/images/logo bel.png" alt="Logo Fundação" class="logo">
+    </header>
+
+    <!-- Navegação -->
+    <nav>
+        <!-- Botão hambúrguer para mobile -->
+        <button class="menu-toggle" aria-label="Abrir menu" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        
+        <!-- Lista de navegação -->
+        <ul class="nav-list">
+            <!-- Botão fechar dentro do menu mobile -->
+            <button class="close-menu" aria-label="Fechar menu">&times;</button>
+            
+            <li><a href="#home">Início</a></li>
+            <li><a href="#sobre">Sobre</a></li>
+            <li><a href="#programas">Programas</a></li>
+            <li><a href="#galeria">Galeria</a></li>
+            <li><a href="#videos">Vídeos</a></li>
+            <li><a href="#contato">Contato</a></li>
+            <li><a href="#doar">Doar</a></li>
+        </ul>
+    </nav>
+
+    <!-- Overlay para menu mobile -->
+    <div class="nav-overlay"></div>
+
+    <!-- Conteúdo Principal -->
+    <main>
+        <!-- Seção Hero -->
+        <section id="home" class="section-gradient">
+            <div class="overlay"></div>
+            <div class="container">
+                <h2 class="heading">Transformando Vidas</h2>
+                <div class="divider"></div>
+                <p class="subheading">Através da educação de qualidade</p>
+                <div class="text">
+                    Bem-vindos à Fundação Escola Solidária! Aqui, acreditamos que a educação é a chave para um futuro melhor. 
+                    Nossa missão é proporcionar ensino de qualidade e oportunidades de crescimento para crianças e jovens.
+                </div>
+                <div class="btn-container">
+                    <a href="#sobre" class="btn">Conheça Nossa História</a>
+                    <a href="#contato" class="btn secondary">Entre em Contato</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção Sobre -->
+        <section id="sobre" class="container" style="padding: 3em 0;">
+            <h2 style="text-align: center; color: #0762d9; font-size: 2rem; margin-bottom: 2rem;">Sobre Nós</h2>
+            <div class="text" style="background: #fff; border-radius: 18px; padding: 2em; box-shadow: 0 4px 16px rgba(7, 98, 217, 0.1);">
+                A Fundação Escola Solidária foi criada com o propósito de transformar vidas através da educação. 
+                Oferecemos um ambiente acolhedor e estimulante onde cada criança pode desenvolver seu potencial máximo.
+                
+                Nossa equipe de educadores dedicados trabalha incansavelmente para garantir que cada aluno receba 
+                a atenção e o cuidado necessários para seu desenvolvimento integral.
+            </div>
+        </section>
+
+        <!-- Seção Galeria -->
+        <section id="galeria" style="padding: 3em 0;">
+            <div class="container">
+                <div class="carousel-label">
+                    <i class="fas fa-images"></i>
+                    Nossa Galeria
+                </div>
+                <div class="gallery-container rounded-top">
+                    <div class="gallery">
+                        <img src="public/assets/images/02.jpg" alt="Atividade 1">
+                        <img src="public/assets/images/03.jpg" alt="Atividade 2">
+                        <img src="public/assets/images/04.jpg" alt="Atividade 3">
+                        <img src="public/assets/images/05.jpg" alt="Atividade 4">
+                        <img src="public/assets/images/06.jpg" alt="Atividade 5">
+                        <img src="public/assets/images/07.jpg" alt="Atividade 6">
+                        <img src="public/assets/images/08.jpg" alt="Atividade 7">
+                        <img src="public/assets/images/09.jpg" alt="Atividade 8">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção Vídeos -->
+        <section id="videos" class="section-video rounded-top" style="margin: 2em 0;">
+            <div class="overlay"></div>
+            <div class="container">
+                <h2 class="video-title">Conheça Nosso Trabalho</h2>
+                <div class="video-map-container">
+                    <div class="video-container">
+                        <iframe 
+                            src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+                            title="Vídeo da Fundação"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                    <div class="map-container">
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3675.2962645928416!2d-43.207901684906736!3d-22.90251874313283!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x997e58a085b7af%3A0x4d11c63e69a3e0a1!2sRio%20de%20Janeiro%2C%20RJ!5e0!3m2!1spt!2sbr!4v1634567890123!5m2!1spt!2sbr"
+                            title="Localização da Fundação"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção Contato -->
+        <section id="contato" class="section contato">
+            <div class="container">
+                <h2>Entre em Contato</h2>
+                
+                <div class="contact-info">
+                    <div class="info-item">
+                        <i class="fas fa-phone"></i>
+                        <strong>Telefone:</strong>
+                        <span class="info-text">(21) 97308-0269</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-envelope"></i>
+                        <strong>Email:</strong>
+                        <span class="info-text">
+                            <a href="mailto:contato@fundacao.com">contato@fundacao.com</a>
+                        </span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <strong>Endereço:</strong>
+                        <span class="info-text">Rua Exemplo, 123 - São Paulo, SP</span>
+                    </div>
+                </div>
+
+                <div class="blackboard">
+                    <div class="vagas">MATRÍCULAS ABERTAS</div>
+                    <h3>Venha Fazer Parte da Nossa Família!</h3>
+                    <div class="chalk">
+Estamos com matrículas abertas para o próximo período letivo.
+
+Nossa proposta pedagógica inovadora oferece:
+• Ensino personalizado e acolhedor
+• Atividades extracurriculares diversificadas  
+• Acompanhamento psicopedagógico
+• Alimentação balanceada incluída
+
+Entre em contato conosco e agende uma visita!
+                    </div>
+                </div>
+
+                <div class="contact-form">
+                    <a href="https://wa.me/5521973080269" class="whatsapp-button" target="_blank">
+                        <i class="fab fa-whatsapp"></i>
+                        Fale Conosco pelo WhatsApp
+                    </a>
+                </div>
+
+                <div class="social-buttons">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Rodapé -->
+    <footer>
+        <div class="footer-container">
+            <div class="partners-logos">
+                <img src="public/assets/images/logo bel.png" alt="Logo Parceiro 1">
+                <img src="public/assets/images/seu logo aqui.png" alt="Logo Parceiro 2">
+            </div>
+            <div class="center-text">
+                <p>&copy; 2024 Fundação Escola Solidária. Todos os direitos reservados.</p>
+                <p>
+                    <a href="#" class="privacy-link">Política de Privacidade</a> | 
+                    <a href="#" class="privacy-link">Termos de Uso</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="src/components/common/MobileMenu.js"></script>
+    
+    <!-- Script adicional para funcionalidades extras -->
+    <script>
+        // Adicionar loading suave para imagens
+        document.addEventListener('DOMContentLoaded', function() {
+            const images = document.querySelectorAll('img');
+            images.forEach(img => {
+                img.addEventListener('load', function() {
+                    this.style.opacity = '1';
+                });
+                img.style.transition = 'opacity 0.3s ease';
+                img.style.opacity = '0.8';
+            });
+        });
+
+        // Melhorar performance do scroll
+        let ticking = false;
+        function updateScrollEffects() {
+            // Seus efeitos de scroll aqui
+            ticking = false;
+        }
+
+        window.addEventListener('scroll', function() {
+            if (!ticking) {
+                requestAnimationFrame(updateScrollEffects);
+                ticking = true;
+            }
+        });
+    </script>
+</body>
+</html>

@@ -265,7 +265,45 @@ nav {
     display: none;
 }
 
-@media (max-width: 1100px) {
+/* Responsividade Desktop Grande */
+@media (max-width: 1400px) {
+    header h1 {
+        font-size: 2.2rem;
+    }
+    
+    .heading {
+        font-size: 2.4rem;
+    }
+}
+
+/* Responsividade Desktop Médio */
+@media (max-width: 1200px) {
+    .nav-list {
+        font-size: 0.9em;
+        padding: 0.8em 1.2em;
+        gap: 0.6em;
+    }
+    
+    .nav-list a {
+        padding: 0.5em 0.8em;
+        font-size: 0.9em;
+    }
+
+    header h1 {
+        font-size: 2rem;
+    }
+    
+    .heading {
+        font-size: 2.2rem;
+    }
+    
+    .video-title {
+        font-size: 2rem;
+    }
+}
+
+/* Responsividade Tablet */
+@media (max-width: 1024px) {
     .nav-list {
         font-size: 0.85em;
         padding: 0.7em 1em;
@@ -278,55 +316,329 @@ nav {
     }
 
     header h1 {
-        font-size: 1.5rem;
+        font-size: 1.8rem;
+    }
+    
+    .heading {
+        font-size: 2rem;
+    }
+    
+    .video-title {
+        font-size: 1.8rem;
+    }
+    
+    .section-gradient {
+        padding: 3em 0 2.5em 0;
+    }
+    
+    .section-video {
+        padding: 3em 0 2.5em 0;
     }
 }
 
+/* Responsividade Mobile Grande */
 @media (max-width: 768px) {
+    /* Header responsivo */
+    header {
+        flex-direction: column;
+        padding: 1.5em 0 1em 0;
+        gap: 1em;
+    }
+    
+    header h1 {
+        font-size: 1.6rem;
+        padding-right: 0;
+        text-align: center;
+    }
+    
+    header .logo {
+        width: 60px;
+        height: 60px;
+        margin: 0;
+    }
+    
+    /* Navegação Mobile */
     nav {
-        flex-direction: row;
-        align-items: flex-start;
-        border-radius: 0 !important;
-        padding: 0 !important;
-        margin-bottom: 0 !important;
+        justify-content: space-between;
+        padding: 0.8em 1rem;
+        border-radius: 0 0 18px 18px;
+        margin-bottom: 1em;
         position: relative;
     }
+    
     .menu-toggle {
         display: flex;
-        z-index: 100;
+        position: relative;
+        z-index: 1002;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 8px;
+        padding: 8px;
+        box-shadow: 0 2px 8px rgba(7, 98, 217, 0.2);
     }
+    
+    .menu-toggle.active span:nth-child(1) {
+        transform: rotate(45deg) translate(9px, 9px);
+        background: #e74c3c;
+    }
+    
+    .menu-toggle.active span:nth-child(2) {
+        opacity: 0;
+    }
+    
+    .menu-toggle.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -6px);
+        background: #e74c3c;
+    }
+    
     .nav-list {
-        display: table !important;
-        width: 280px;
-        background: #fff;
         position: fixed;
-        left: -100%;
         top: 0;
+        left: -100%;
+        width: 280px;
         height: 100vh;
-        z-index: 99;
-        padding: 60px 0 0 0 !important; /* Espaço para o botão X */
+        background: linear-gradient(135deg, #fff 0%, #f6fdfd 100%);
+        display: flex;
+        flex-direction: column;
+        padding: 80px 0 20px 0;
         margin: 0;
-        box-shadow: 2px 0 8px rgba(0,0,0,0.1);
-        transition: left 0.3s ease;
+        z-index: 1001;
+        box-shadow: 2px 0 20px rgba(0, 0, 0, 0.15);
+        transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        overflow-y: auto;
+        border-radius: 0;
+        gap: 0;
     }
+    
     .nav-list.active {
         left: 0;
     }
+    
     .nav-list li {
-        display: table-row;
-        height: 48px; /* Altura fixa para cada linha */
+        width: 100%;
+        margin: 0;
+        display: block;
+        height: auto;
+        flex: none;
     }
+    
     .nav-list a {
-        display: table-cell;
-        vertical-align: middle;
-        padding: 0 20px;
-        border-bottom: 1px solid #e3f0ff;
+        display: block;
+        width: 100%;
+        padding: 16px 24px;
+        font-size: 1rem;
+        font-weight: 600;
+        color: #0762d9;
+        border-bottom: 1px solid rgba(7, 98, 217, 0.1);
+        border-radius: 0;
+        transition: all 0.3s ease;
+        text-align: left;
     }
-    .close-menu {
+    
+    .nav-list a:hover,
+    .nav-list a:focus {
+        background: linear-gradient(90deg, #e3f0ff 0%, rgba(48, 217, 121, 0.1) 100%);
+        color: #30d979;
+        transform: translateX(8px);
+        border-left: 4px solid #30d979;
+    }
+    
+    /* Overlay para fechar menu */
+    .nav-overlay {
         position: fixed;
-        top: 10px;
-        right: 10px;
-        z-index: 101;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+    }
+    
+    .nav-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+    
+    /* Botão fechar dentro do menu */
+    .close-menu {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: none;
+        border: none;
+        font-size: 2rem;
+        color: #0762d9;
+        cursor: pointer;
+        z-index: 1003;
+        padding: 8px;
+        border-radius: 50%;
+        transition: all 0.3s ease;
+    }
+    
+    .close-menu:hover {
+        background: rgba(231, 76, 60, 0.1);
+        color: #e74c3c;
+        transform: rotate(90deg);
+    }
+    
+    /* Conteúdo responsivo */
+    .heading {
+        font-size: 1.8rem;
+    }
+    
+    .video-title {
+        font-size: 1.6rem;
+    }
+    
+    .section-gradient,
+    .section-video,
+    .section.contato {
+        padding: 2.5em 0 2em 0;
+        border-radius: 24px;
+    }
+    
+    .text {
+        padding: 0.8em;
+        font-size: 1rem;
+    }
+    
+    .modal-content {
+        margin: 15% auto;
+        padding: 24px 20px;
+        max-width: 90%;
+    }
+    
+    .gallery img,
+    .gallery2 img {
+        width: 150px;
+        height: 150px;
+    }
+}
+
+/* Responsividade Mobile Médio */
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 1.4rem;
+        letter-spacing: 1px;
+    }
+    
+    header .logo {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .heading {
+        font-size: 1.6rem;
+        letter-spacing: 1px;
+    }
+    
+    .video-title {
+        font-size: 1.4rem;
+    }
+    
+    .section-gradient,
+    .section-video,
+    .section.contato {
+        padding: 2em 0 1.5em 0;
+        border-radius: 20px;
+        margin: 0 0.5em;
+    }
+    
+    .nav-list {
+        width: 260px;
+        padding: 70px 0 20px 0;
+    }
+    
+    .nav-list a {
+        padding: 14px 20px;
+        font-size: 0.95rem;
+    }
+    
+    .btn,
+    .whatsapp-button,
+    .donate-whatsapp-button {
+        padding: 0.8em 1.8em;
+        font-size: 1rem;
+        margin: 0.4em 0.4em 0.4em 0;
+    }
+    
+    .blackboard {
+        padding: 1.5em 1.2em 1.2em 1.2em;
+        margin: 1.5em 0.5em 1em 0.5em;
+    }
+    
+    .contact-info {
+        max-width: 300px;
+        padding: 0.6em 0.8em;
+        font-size: 0.9em;
+        margin: 0.8em auto 0.5em auto;
+    }
+    
+    .gallery img,
+    .gallery2 img {
+        width: 120px;
+        height: 120px;
+    }
+    
+    .footer-container {
+        flex-direction: column;
+        gap: 1em;
+        text-align: center;
+    }
+    
+    .partners-logos {
+        justify-content: center;
+    }
+    
+    .partners-logos img {
+        width: 70px;
+        height: 35px;
+    }
+}
+
+/* Responsividade Mobile Pequeno */
+@media (max-width: 360px) {
+    header h1 {
+        font-size: 1.2rem;
+    }
+    
+    .heading {
+        font-size: 1.4rem;
+    }
+    
+    .video-title {
+        font-size: 1.2rem;
+    }
+    
+    .nav-list {
+        width: 240px;
+    }
+    
+    .section-gradient,
+    .section-video,
+    .section.contato {
+        margin: 0 0.3em;
+        padding: 1.8em 0 1.3em 0;
+    }
+    
+    .btn,
+    .whatsapp-button,
+    .donate-whatsapp-button {
+        padding: 0.7em 1.5em;
+        font-size: 0.95rem;
+    }
+    
+    .gallery img,
+    .gallery2 img {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .contact-info {
+        max-width: 280px;
+        font-size: 0.85em;
     }
 }
 
@@ -762,6 +1074,112 @@ nav {
     background: linear-gradient(135deg, #30d979 60%, #0762d9 100%);
     color: #fff;
     transform: scale(1.1);
+}
+
+/* Estilos para link ativo no menu */
+.nav-list a.active {
+    background: linear-gradient(90deg, #0762d9 0%, #30d979 100%);
+    color: #fff !important;
+    font-weight: 800;
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(7, 98, 217, 0.3);
+}
+
+/* Animações suaves para dispositivos touch */
+.touch-device * {
+    -webkit-tap-highlight-color: transparent;
+}
+
+.touch-device .btn,
+.touch-device .whatsapp-button,
+.touch-device .donate-whatsapp-button {
+    touch-action: manipulation;
+}
+
+/* Melhorias para acessibilidade */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    .gallery,
+    .gallery2 {
+        animation: none !important;
+    }
+}
+
+/* Focus states melhorados */
+.nav-list a:focus,
+.btn:focus,
+.whatsapp-button:focus,
+.donate-whatsapp-button:focus {
+    outline: 3px solid #30d979;
+    outline-offset: 2px;
+}
+
+.menu-toggle:focus {
+    outline: 2px solid #0762d9;
+    outline-offset: 2px;
+    border-radius: 8px;
+}
+
+/* Melhorias para o carrossel em mobile */
+@media (max-width: 768px) {
+    .gallery,
+    .gallery2 {
+        gap: 12px;
+        padding: 1em 0;
+    }
+    
+    .carousel-label {
+        font-size: 1.2rem;
+        padding: 0.5em 1em 0.5em 0.8em;
+        margin: 0 0 0.3em 0;
+    }
+    
+    .gallery-container,
+    .gallery2-container {
+        border-radius: 16px;
+        margin: 0 0.5em;
+    }
+}
+
+/* Otimizações para performance em mobile */
+@media (max-width: 768px) {
+    .section-gradient .overlay,
+    .section-video .overlay,
+    .section.contato::before {
+        background-attachment: scroll; /* Melhora performance em mobile */
+    }
+    
+    /* Reduz complexidade visual em telas pequenas */
+    .gallery img:hover,
+    .gallery2 img:hover {
+        transform: scale(1.05); /* Animação mais sutil */
+    }
+}
+
+/* Container responsivo melhorado */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 0 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 0 0.6rem;
+    }
 }
 
 /* --- AJUSTE E LIMPEZA DO CSS DO RODAPÉ E REMOÇÃO DE CONFLITOS --- */
